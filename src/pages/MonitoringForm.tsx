@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { CheckCircle } from 'lucide-react';
 import type { Sensor, Zone, MonitoringCreate } from '../types';
 import client from '../api/client';
 
@@ -127,9 +128,12 @@ function MonitoringForm() {
           </select>
         </div>
 
-        <button className="btn" onClick={handleSubmit}>
-          Asignar
-        </button>
+        <div className="form-actions">
+          <button className="btn btn--submit" onClick={handleSubmit}>
+            <CheckCircle size={16} strokeWidth={2} />
+            Asignar sensor
+          </button>
+        </div>
       </div>
     </main>
   );

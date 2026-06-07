@@ -444,9 +444,13 @@ p {
 /* ── Forms ───────────────────────────────────────────────────── */
 
 .form-fields {
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
   gap: 1.1rem;
+
+  @media (max-width: 600px) {
+    grid-template-columns: 1fr;
+  }
 }
 
 .form-row {
@@ -486,6 +490,23 @@ p {
 .value--danger {
   color: var(--danger);
   font-weight: 700;
+}
+
+/* ── Form actions ────────────────────────────────────────────── */
+
+.form-actions {
+  grid-column: 1 / -1;
+  display: flex;
+  justify-content: center;
+  padding-top: 0.75rem;
+  border-top: 1px solid var(--border);
+  margin-top: 0.25rem;
+}
+
+.btn--submit {
+  padding: 0.6rem 1.5rem;
+  font-size: 0.95rem;
+  min-width: 160px;
 }
 
 /* ── Loading ─────────────────────────────────────────────────── */
