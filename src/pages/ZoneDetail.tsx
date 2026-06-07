@@ -27,16 +27,21 @@ function ZoneDetail() {
   const getMonitoring = (sensorId: number) =>
     monitorings.find((m) => m.sensor_id === sensorId);
 
-  if (loading) return <p>Cargando...</p>;
+  if (loading) return <p className="loading">Cargando...</p>;
 
   return (
-    <div style={{ padding: '2rem', maxWidth: '800px', margin: '0 auto' }}>
-      <button onClick={() => navigate('/')} style={{ marginBottom: '1rem' }}>
+    <main className="app-main">
+      <button className="back-link" onClick={() => navigate('/')}>
         ← Volver
       </button>
-      <h1>Sensores de la zona</h1>
 
-      {sensors.length === 0 && <p>No hay sensores activos en esta zona.</p>}
+      <h1 className="page-title" style={{ marginBottom: '1.5rem' }}>
+        Sensores de la zona
+      </h1>
+
+      {sensors.length === 0 && (
+        <p style={{ color: 'var(--text-muted)' }}>No hay sensores activos en esta zona.</p>
+      )}
 
       {sensors.map((sensor) => {
         const monitoring = getMonitoring(sensor.id);
@@ -46,46 +51,27 @@ function ZoneDetail() {
           monitoring.valor_actual > monitoring.valor_umbral;
 
         return (
-          <div
-            key={sensor.id}
-            style={{
-              border: `2px solid ${supera ? '#ef4444' : '#d1d5db'}`,
-              borderRadius: '8px',
-              padding: '1rem',
-              marginBottom: '1rem',
-              backgroundColor: supera ? '#fef2f2' : '#fff',
-            }}
-          >
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-              <h2 style={{ margin: 0 }}>{sensor.nombre}</h2>
+          <div key={sensor.id} className={`card${supera ? ' card--alert' : ''}`}>
+            <div className="card-header">
+              <span className="card-title">{sensor.nombre}</span>
               {monitoring && (
-                <span style={{
-                  padding: '4px 10px',
-                  borderRadius: '999px',
-                  fontSize: '0.8rem',
-                  backgroundColor: monitoring.estado_monitoreo === 'activo' ? '#d1fae5' : '#f3f4f6',
-                  color: monitoring.estado_monitoreo === 'activo' ? '#065f46' : '#6b7280',
-                }}>
+                <span className={monitoring.estado_monitoreo === 'activo' ? 'badge badge--ok' : 'badge badge--neutral'}>
                   {monitoring.estado_monitoreo}
                 </span>
               )}
             </div>
 
-            <p style={{ color: '#666', margin: '0.5rem 0' }}>
+            <p className="card-meta">
               {sensor.fabricante} · {sensor.tipo}
             </p>
 
             {monitoring && (
-              <div style={{ marginTop: '0.5rem' }}>
-                <p style={{ margin: '0.25rem 0' }}>
-                  <strong>Tipo de lectura:</strong> {monitoring.tipo_lectura}
-                </p>
-                <p style={{ margin: '0.25rem 0' }}>
-                  <strong>Umbral:</strong> {monitoring.valor_umbral}
-                </p>
-                <p style={{ margin: '0.25rem 0' }}>
+              <div className="card-body">
+                <p><strong>Tipo de lectura:</strong> {monitoring.tipo_lectura}</p>
+                <p><strong>Umbral:</strong> {monitoring.valor_umbral}</p>
+                <p>
                   <strong>Valor actual:</strong>{' '}
-                  <span style={{ color: supera ? '#ef4444' : 'inherit', fontWeight: supera ? 'bold' : 'normal' }}>
+                  <span className={supera ? 'value--danger' : ''}>
                     {monitoring.valor_actual ?? 'Sin lectura'}
                   </span>
                   {supera && ' ⚠️ Supera el umbral'}
@@ -95,7 +81,7 @@ function ZoneDetail() {
           </div>
         );
       })}
-    </div>
+    </main>
   );
 }
 

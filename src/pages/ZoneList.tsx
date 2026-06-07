@@ -7,6 +7,12 @@ interface ZoneWithCount extends Zone {
   active_sensors: number;
 }
 
+function badgeClass(estado: string) {
+  if (estado === 'operativa') return 'badge badge--ok';
+  if (estado === 'mantenimiento') return 'badge badge--warn';
+  return 'badge badge--danger';
+}
+
 function ZoneList() {
   const [zones, setZones] = useState<ZoneWithCount[]>([]);
   const [loading, setLoading] = useState(true);
@@ -33,13 +39,13 @@ function ZoneList() {
     fetchZones();
   }, []);
 
-  if (loading) return <p>Cargando zonas...</p>;
+  if (loading) return <p className="loading">Cargando zonas...</p>;
 
   return (
-    <div style={{ padding: '2rem', maxWidth: '800px', margin: '0 auto' }}>
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.5rem' }}>
-        <h1>Zonas de Monitoreo</h1>
-        <button onClick={() => navigate('/monitorings/new')}>
+    <main className="app-main">
+      <div className="page-header">
+        <h1 className="page-title">Zonas de Monitoreo</h1>
+        <button className="btn" onClick={() => navigate('/monitorings/new')}>
           + Asignar sensor
         </button>
       </div>
@@ -47,38 +53,23 @@ function ZoneList() {
       {zones.map((zone) => (
         <div
           key={zone.id}
+          className="card card--clickable"
           onClick={() => navigate(`/zones/${zone.id}`)}
-          style={{
-            border: '1px solid #ddd',
-            borderRadius: '8px',
-            padding: '1rem',
-            marginBottom: '1rem',
-            cursor: 'pointer',
-          }}
         >
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-            <h2 style={{ margin: 0 }}>{zone.nombre}</h2>
-            <span style={{
-              padding: '4px 10px',
-              borderRadius: '999px',
-              fontSize: '0.8rem',
-              backgroundColor:
-                zone.estado_operativo === 'operativa' ? '#d1fae5' :
-                zone.estado_operativo === 'mantenimiento' ? '#fef3c7' : '#fee2e2',
-              color:
-                zone.estado_operativo === 'operativa' ? '#065f46' :
-                zone.estado_operativo === 'mantenimiento' ? '#92400e' : '#991b1b',
-            }}>
+          <div className="card-header">
+            <span className="card-title">{zone.nombre}</span>
+            <span className={badgeClass(zone.estado_operativo)}>
               {zone.estado_operativo}
             </span>
           </div>
-          <p style={{ color: '#666', margin: '0.5rem 0' }}>{zone.ubicacion}</p>
-          <p style={{ margin: 0 }}>
-            <strong>{zone.active_sensors}</strong> sensor{zone.active_sensors !== 1 ? 'es' : ''} activo{zone.active_sensors !== 1 ? 's' : ''}
+          <p className="card-meta">{zone.ubicacion}</p>
+          <p style={{ fontSize: '0.875rem', color: 'var(--text-muted)', margin: 0 }}>
+            <strong style={{ color: 'var(--text-h)' }}>{zone.active_sensors}</strong>{' '}
+            sensor{zone.active_sensors !== 1 ? 'es' : ''} activo{zone.active_sensors !== 1 ? 's' : ''}
           </p>
         </div>
       ))}
-    </div>
+    </main>
   );
 }
 

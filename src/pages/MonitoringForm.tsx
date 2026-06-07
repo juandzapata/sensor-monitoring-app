@@ -66,73 +66,72 @@ function MonitoringForm() {
     }
   };
 
-  if (loading) return <p>Cargando...</p>;
+  if (loading) return <p className="loading">Cargando...</p>;
 
   return (
-    <div style={{ padding: '2rem', maxWidth: '600px', margin: '0 auto' }}>
-      <button onClick={() => navigate('/')} style={{ marginBottom: '1rem' }}>
+    <main className="app-main app-main--narrow">
+      <button className="back-link" onClick={() => navigate('/')}>
         ← Volver
       </button>
-      <h1>Asignar sensor a zona</h1>
 
-      {error && (
-        <div style={{ backgroundColor: '#fef2f2', border: '1px solid #ef4444', borderRadius: '8px', padding: '1rem', marginBottom: '1rem', color: '#991b1b' }}>
-          {error}
-        </div>
-      )}
+      <h1 className="page-title" style={{ marginBottom: '1.5rem' }}>
+        Asignar sensor a zona
+      </h1>
 
-      <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-        <label>
-          Sensor
-          <select name="sensor_id" value={form.sensor_id} onChange={handleChange} style={{ display: 'block', width: '100%', marginTop: '4px', padding: '8px' }}>
+      {error && <div className="alert-error">{error}</div>}
+
+      <div className="form-fields">
+        <div className="form-row">
+          <label className="form-label" htmlFor="sensor_id">Sensor</label>
+          <select id="sensor_id" name="sensor_id" value={form.sensor_id} onChange={handleChange} className="form-select">
             {sensors.map((s) => (
               <option key={s.id} value={s.id}>{s.nombre} ({s.tipo})</option>
             ))}
           </select>
-        </label>
+        </div>
 
-        <label>
-          Zona
-          <select name="zone_id" value={form.zone_id} onChange={handleChange} style={{ display: 'block', width: '100%', marginTop: '4px', padding: '8px' }}>
+        <div className="form-row">
+          <label className="form-label" htmlFor="zone_id">Zona</label>
+          <select id="zone_id" name="zone_id" value={form.zone_id} onChange={handleChange} className="form-select">
             {zones.map((z) => (
               <option key={z.id} value={z.id}>{z.nombre}</option>
             ))}
           </select>
-        </label>
+        </div>
 
-        <label>
-          Tipo de lectura
-          <select name="tipo_lectura" value={form.tipo_lectura} onChange={handleChange} style={{ display: 'block', width: '100%', marginTop: '4px', padding: '8px' }}>
+        <div className="form-row">
+          <label className="form-label" htmlFor="tipo_lectura">Tipo de lectura</label>
+          <select id="tipo_lectura" name="tipo_lectura" value={form.tipo_lectura} onChange={handleChange} className="form-select">
             <option value="temperatura">Temperatura</option>
             <option value="presion">Presión</option>
             <option value="vibracion">Vibración</option>
             <option value="flujo">Flujo</option>
           </select>
-        </label>
+        </div>
 
-        <label>
-          Valor umbral
-          <input type="number" name="valor_umbral" value={form.valor_umbral} onChange={handleChange} style={{ display: 'block', width: '100%', marginTop: '4px', padding: '8px' }} />
-        </label>
+        <div className="form-row">
+          <label className="form-label" htmlFor="valor_umbral">Valor umbral</label>
+          <input id="valor_umbral" type="number" name="valor_umbral" value={form.valor_umbral} onChange={handleChange} className="form-input" />
+        </div>
 
-        <label>
-          Valor actual (opcional)
-          <input type="number" name="valor_actual" onChange={handleChange} style={{ display: 'block', width: '100%', marginTop: '4px', padding: '8px' }} />
-        </label>
+        <div className="form-row">
+          <label className="form-label" htmlFor="valor_actual">Valor actual (opcional)</label>
+          <input id="valor_actual" type="number" name="valor_actual" onChange={handleChange} className="form-input" />
+        </div>
 
-        <label>
-          Estado
-          <select name="estado_monitoreo" value={form.estado_monitoreo} onChange={handleChange} style={{ display: 'block', width: '100%', marginTop: '4px', padding: '8px' }}>
+        <div className="form-row">
+          <label className="form-label" htmlFor="estado_monitoreo">Estado</label>
+          <select id="estado_monitoreo" name="estado_monitoreo" value={form.estado_monitoreo} onChange={handleChange} className="form-select">
             <option value="activo">Activo</option>
             <option value="pausado">Pausado</option>
           </select>
-        </label>
+        </div>
 
-        <button onClick={handleSubmit} style={{ padding: '10px', backgroundColor: '#0ea5e9', color: 'white', border: 'none', borderRadius: '8px', cursor: 'pointer', fontSize: '1rem' }}>
+        <button className="btn" onClick={handleSubmit}>
           Asignar
         </button>
       </div>
-    </div>
+    </main>
   );
 }
 
