@@ -25,6 +25,7 @@ export interface Monitoring {
   estado_monitoreo: string;
 }
 
+// Solo los necesario. No se hará nada más que consultar y crear un monitoring por ahora
 export interface MonitoringCreate {
   sensor_id: number;
   zone_id: number;
