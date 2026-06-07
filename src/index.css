@@ -123,6 +123,144 @@ p {
   max-width: 640px;
 }
 
+/* ── System identity banner ──────────────────────────────────── */
+
+.system-banner {
+  background: linear-gradient(135deg, rgba(22,128,132,0.06) 0%, rgba(22,128,132,0.02) 100%);
+  border: 1px solid var(--brand-border);
+  border-radius: var(--radius);
+  padding: 1.25rem 1.5rem;
+  margin-bottom: 1.25rem;
+}
+
+.system-banner__title {
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--brand);
+  margin-bottom: 0.25rem;
+}
+
+.system-banner__subtitle {
+  font-size: 0.875rem;
+  color: var(--text-muted);
+  margin: 0;
+}
+
+/* ── Summary strip ───────────────────────────────────────────── */
+
+.summary-strip {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1rem 1.5rem;
+  margin-bottom: 1.75rem;
+  box-shadow: var(--shadow-sm);
+}
+
+.summary-stat {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex: 1;
+  gap: 2px;
+}
+
+.summary-stat__value {
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: var(--brand);
+  line-height: 1;
+}
+
+.summary-stat__label {
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  text-align: center;
+}
+
+.summary-stat__divider {
+  width: 1px;
+  height: 40px;
+  background: var(--border);
+  flex-shrink: 0;
+}
+
+/* ── Card extras ─────────────────────────────────────────────── */
+
+.card-description {
+  font-size: 0.875rem;
+  color: var(--text-muted);
+  margin: 0.35rem 0 0.6rem;
+  line-height: 1.45;
+}
+
+.card-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 0.5rem;
+  padding-top: 0.5rem;
+  border-top: 1px solid var(--border);
+}
+
+.card-meta--icon {
+  font-size: 0.825rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.threshold-warning {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  margin-left: 6px;
+  color: var(--danger);
+  font-weight: 600;
+  font-size: 0.85rem;
+}
+
+.card-sensor-count {
+  font-size: 0.825rem;
+  color: var(--text-muted);
+}
+
+.card-sensor-count strong {
+  color: var(--text-h);
+}
+
+/* ── Empty state ─────────────────────────────────────────────── */
+
+.empty-state {
+  text-align: center;
+  padding: 3rem 2rem;
+  color: var(--text-muted);
+}
+
+.empty-state__icon {
+  margin-bottom: 1rem;
+  color: var(--brand-border);
+  display: flex;
+  justify-content: center;
+}
+
+.empty-state__title {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--text-h);
+  margin: 0 0 0.5rem;
+}
+
+.empty-state__desc {
+  font-size: 0.9rem;
+  max-width: 380px;
+  margin: 0 auto;
+  line-height: 1.5;
+}
+
 /* ── Page header row ─────────────────────────────────────────── */
 
 .page-header {

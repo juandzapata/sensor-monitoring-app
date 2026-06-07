@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
+import { AlertTriangle } from 'lucide-react';
 import type { Sensor, Monitoring } from '../types';
 import client from '../api/client';
 
@@ -74,7 +75,12 @@ function ZoneDetail() {
                   <span className={supera ? 'value--danger' : ''}>
                     {monitoring.valor_actual ?? 'Sin lectura'}
                   </span>
-                  {supera && ' ⚠️ Supera el umbral'}
+                  {supera && (
+                    <span className="threshold-warning">
+                      <AlertTriangle size={13} strokeWidth={2.5} />
+                      Supera el umbral
+                    </span>
+                  )}
                 </p>
               </div>
             )}
