@@ -18,6 +18,7 @@ Frontend del Sistema de Monitoreo Industrial de Tecnimatica. Permite supervisar 
 ## Instalación
 
 ```bash
+cp .env.example .env   # configurar VITE_API_URL si es necesario
 npm install
 npm run dev
 ```
@@ -97,3 +98,4 @@ interface Monitoring {
 - Badges de estado por zona (`operativa` / `mantenimiento` / otros)
 - Alerta visual en tarjeta de sensor cuando `valor_actual > valor_umbral`
 - Formulario con tipos de lectura: temperatura, presión, vibración, flujo
+- Formulario con estado de monitoreo: `activo` / `pausado`
