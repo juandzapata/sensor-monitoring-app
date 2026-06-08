@@ -17,29 +17,36 @@ function badgeClass(estado: string) {
 function ZoneList() {
   const [zones, setZones] = useState<ZoneWithCount[]>([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
   const navigate = useNavigate();
 
   useEffect(() => {
     const fetchZones = async () => {
-      const { data } = await client.get<Zone[]>('/zones/');
+      try {
+        const { data } = await client.get<Zone[]>('/zones/');
 
-      const zonesWithCount = await Promise.all(
-        data.map(async (zone) => {
-          const { data: sensors } = await client.get<Sensor[]>(
-            `/zones/${zone.id}/sensors`
-          );
-          return { ...zone, active_sensors: sensors.length };
-        })
-      );
+        const zonesWithCount = await Promise.all(
+          data.map(async (zone) => {
+            const { data: sensors } = await client.get<Sensor[]>(
+              `/zones/${zone.id}/sensors`
+            );
+            return { ...zone, active_sensors: sensors.length };
+          })
+        );
 
-      setZones(zonesWithCount);
-      setLoading(false);
+        setZones(zonesWithCount);
+      } catch {
+        setError('No se pudo conectar con el servidor. Verifica que el backend esté activo.');
+      } finally {
+        setLoading(false);
+      }
     };
 
     fetchZones();
   }, []);
 
   if (loading) return <p className="loading">Cargando zonas...</p>;
+  if (error) return <div className="alert-error">{error}</div>;
 
   const totalSensores = zones.reduce((sum, z) => sum + z.active_sensors, 0);
 

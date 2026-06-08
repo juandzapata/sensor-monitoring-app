@@ -10,16 +10,22 @@ function ZoneDetail() {
   const [sensors, setSensors] = useState<Sensor[]>([]);
   const [monitorings, setMonitorings] = useState<Monitoring[]>([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     const fetchData = async () => {
-      const [sensorsRes, monitoringsRes] = await Promise.all([
-        client.get<Sensor[]>(`/zones/${id}/sensors`),
-        client.get<Monitoring[]>(`/monitorings/?zone_id=${id}`),
-      ]);
-      setSensors(sensorsRes.data);
-      setMonitorings(monitoringsRes.data);
-      setLoading(false);
+      try {
+        const [sensorsRes, monitoringsRes] = await Promise.all([
+          client.get<Sensor[]>(`/zones/${id}/sensors`),
+          client.get<Monitoring[]>(`/monitorings/?zone_id=${id}`),
+        ]);
+        setSensors(sensorsRes.data);
+        setMonitorings(monitoringsRes.data);
+      } catch {
+        setError('No se pudo cargar la información de la zona.');
+      } finally {
+        setLoading(false);
+      }
     };
 
     fetchData();
@@ -29,6 +35,7 @@ function ZoneDetail() {
     monitorings.find((m) => m.sensor_id === sensorId);
 
   if (loading) return <p className="loading">Cargando...</p>;
+  if (error) return <div className="alert-error">{error}</div>;
 
   return (
     <main className="app-main">

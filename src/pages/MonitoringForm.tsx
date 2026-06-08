@@ -23,18 +23,23 @@ function MonitoringForm() {
 
   useEffect(() => {
     const fetchData = async () => {
-      const [sensorsRes, zonesRes] = await Promise.all([
-        client.get<Sensor[]>('/sensors/'),
-        client.get<Zone[]>('/zones/'),
-      ]);
-      setSensors(sensorsRes.data);
-      setZones(zonesRes.data);
-      setForm((prev) => ({
-        ...prev,
-        sensor_id: sensorsRes.data[0]?.id ?? 0,
-        zone_id: zonesRes.data[0]?.id ?? 0,
-      }));
-      setLoading(false);
+      try {
+        const [sensorsRes, zonesRes] = await Promise.all([
+          client.get<Sensor[]>('/sensors/'),
+          client.get<Zone[]>('/zones/'),
+        ]);
+        setSensors(sensorsRes.data);
+        setZones(zonesRes.data);
+        setForm((prev) => ({
+          ...prev,
+          sensor_id: sensorsRes.data[0]?.id ?? 0,
+          zone_id: zonesRes.data[0]?.id ?? 0,
+        }));
+      } catch {
+        setError('No se pudo cargar sensores y zonas. Verifica la conexión con el backend.');
+      } finally {
+        setLoading(false);
+      }
     };
 
     fetchData();
